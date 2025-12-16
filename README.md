@@ -124,25 +124,17 @@ sudo lsof -i :80
 ```nginx
 # File: /etc/nginx/sites-available/backend
 server {
-    listen 80;
-    server_name 13.232.24.15;  # Your EC2/Server Public IP
-    # OR use _ to accept any domain/IP
-    # server_name _;
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
 
     location / {
-        proxy_pass http://localhost:8000;  # Your Node.js app
-
-        # Essential Proxy Headers
-        proxy_set_header Host $host;                              # Preserves original Host header (domain name)
-        proxy_set_header X-Real-IP $remote_addr;                  # Client's actual IP address
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Chain of proxy IPs (for tracking)
-        proxy_set_header X-Forwarded-Proto $scheme;               # Original protocol (http/https)
-
-        # WebSocket Support (for real-time apps like chat, notifications)
+        proxy_pass http://127.0.0.1:8000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_cache_bypass $http_upgrade;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
 ```
@@ -158,6 +150,12 @@ server {
 > **⚠️ Note:** We DON'T modify `/etc/nginx/nginx.conf`. Always create separate files in `sites-available/` and symlink them!
 
 ---
+
+
+sudo npm install -g pm2
+sud0 pm2 startup
+sudo pm2 start ecosystem.config.cjs
+
 
 ## 2️⃣ Multiple Sites on One Server
 
