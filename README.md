@@ -12,6 +12,7 @@ npm install && npm run dev
 http://localhost:8000
 ```
 
+refer [deploy.md](./deploy.md) for deployment steps 
 
 
 > **Master Nginx from basics to production-ready configurations**
@@ -116,6 +117,7 @@ sudo lsof -i :80
 - `sudo mkdir -p /var/www/backend`
 - `cd /var/www/backend`
 - `git clone https://github.com/akashkharde/node-ec2-ci-cd.git`
+- `npm i`
 
 ## 1️⃣ Single Site Deployment
 
@@ -155,6 +157,8 @@ server {
 sudo npm install -g pm2
 sud0 pm2 startup
 sudo pm2 start ecosystem.config.cjs
+Sudo pm2 status
+sudo pm2 save
 
 
 ## 2️⃣ Multiple Sites on One Server
